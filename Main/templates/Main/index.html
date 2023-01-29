@@ -1,0 +1,159 @@
+{% extends 'main.html' %}
+
+{% load static %}
+        
+
+    {% block content%}
+
+    <header id="header" class="d-flex align-items-center bg-success">
+      <div class="col-lg-6 col-md-6">
+        <div class="container">
+          <h5 class="text-white">Kano State Ministry of Science, Technology and Innovation</h5>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6">
+        <div class="container">
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+        <nav id="navbar" class="navbar justify-content-end pe-2">
+          <ul>
+            <li><a class="nav-link active" href="{% url 'Home' %}">Home</a></li>
+            <li><a class="nav-link" href="{% url 'Departments' %}">Departments</a></li>
+            <li><a class="nav-link" href="{% url 'All-News' %}">News</a></li>
+            <li><a class="nav-link" href="{% url 'About' %}">About</a></li>
+            <li><a class="nav-link" href="{% url 'Contact' %}">Contact</a></li>
+          </ul>
+          <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav><!-- .navbar -->
+      </div>
+  
+      </div>
+    </header><!-- End Header -->
+  
+  <main id="main">
+    <!-- ======= Hero Slider Section ======= -->
+    <section id="hero-slider" class="hero-slider">
+      <div class="container" data-aos="fade-in">
+        <div class="row">
+          <div class="col-lg-8 pb-3">
+            <div class="swiper sliderFeaturedPosts">
+              <div class="swiper-wrapper">
+                {% for obj in slider %}
+                {% if obj.urls %}
+                <div class="swiper-slide">
+                  {% if obj.image_top %}
+                  <a href="{% url 'News' urls=obj.urls %}" class="img-bg d-flex align-items-end" style="background-image: url('{{ obj.image_top.url }}');">
+                  {% elif obj.image_middle %}
+                  <a href="{% url 'News' urls=obj.urls %}" class="img-bg d-flex align-items-end" style="background-image: url('{{ obj.image_middle.url }}');">
+                  {% elif obj.image_bottom %}
+                  <a href="{% url 'News' urls=obj.urls %}" class="img-bg d-flex align-items-end" style="background-image: url('{{ obj.image_bottom.url }}');">
+                  {% endif %}
+                    <div class="img-bg-inner">
+                      <h2>{{obj.headline | linebreaks | truncatechars:50}}</h2>
+                  </div>
+                  </a>
+                </div>
+                {% endif %}
+                {% endfor %}
+              </div>
+              <div class="custom-swiper-button-next">
+                <span class="bi-chevron-right"></span>
+              </div>
+              <div class="custom-swiper-button-prev">
+                <span class="bi-chevron-left"></span>
+              </div>
+
+              <div class="swiper-pagination"></div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <h5 class="mb-2 text-bold">RECENT NEWS</h5>
+            {% for obj in recent %}
+            {% if obj.urls %}
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+              <div class="col p-3 d-flex flex-column position-static">
+                <h5 class="mb-2 text-success">{{ obj.headline |  truncatechars:50}}</h5>
+                {% if obj.body_top %}
+                <p class="card-text mb-3">{{obj.body_top| truncatechars:70}}</p>
+                {% elif obj.body_middle %}
+                <p class="card-text mb-3">{{obj.body_middle| truncatechars:70}}</p>
+                {% elif obj.body_bottom %}
+                <p class="card-text mb-3">{{obj.body_bottom| truncatechars:70}}</p>
+                {% endif %}
+                <a href="{% url 'News' urls=obj.urls %}" class="stretched-link text-success">Continue reading</a>
+                <small class="mb-0 text-muted">{{obj.created|timesince}} Ago</small>
+              </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+          </div>        
+        </div>
+      </div>
+    </section><!-- End Hero Slider Section -->
+
+    <!-- ======= Lifestyle Category Section ======= -->
+      <div class="container" data-aos="fade-up">
+        <div class="section-header d-flex justify-content-between align-items-center mb-5">
+          <h2>NEWS</h2>
+          <a href="{% url 'All-News' %}" class="more">See All News</a>
+        </div>
+
+        <div class="row g-5 pb-5">
+          <div class="col-lg-5">
+            {% for obj in most %}            
+            <div class="news border-bottom pb-4">
+              {% if obj.image_top %}
+              <a href="{% url 'News' urls=obj.urls %}"><img src="{{obj.image_top.url}}" alt="" width="100%" height="300px"></a>
+              {% elif obj.image_middle %}
+              <a href="{% url 'News' urls=obj.urls %}"><img src="{{obj.image_middle.url}}" alt="" width="100%" height="300px"></a>
+              {% elif obj.image_bottom %}
+              <a href="{% url 'News' urls=obj.urls %}"><img src="{{obj.image_bottom.url}}" alt="" width="100%" height="300px"></a>
+              {% endif %}
+              <h2 class="mb-2"><a href="{% url 'News' urls=obj.urls %}">{{obj.headline| linebreaks | truncatechars:50}}</a></h2>
+              <div class="news-meta"><span>{{obj.created|date}}</span></div>
+            </div>
+            {% endfor %}
+          </div>
+
+          <div class="col-lg-7">
+            <div class="row g-5">
+              <div class="col-lg-6 border-start custom-border">
+                {% for obj in others1 %}            
+                <div class="news border-bottom pb-2">
+                  {% if obj.image_top %}
+                  <a href="{% url 'News' urls=obj.urls %}"><img src="{{obj.image_top.url}}" alt="" width="100%" height="200px"></a>
+                  {% elif obj.image_middle %}
+                  <a href="{% url 'News' urls=obj.urls %}"><img src="{{obj.image_middle.url}}" alt="" width="100%" height="200px"></a>
+                  {% elif obj.image_bottom %}
+                  <a href="{% url 'News' urls=obj.urls %}"><img src="{{obj.image_bottom.url}}" alt="" width="100%" height="200px"></a>
+                  {% endif %}
+                  <h2 class="mb-2"><a href="{% url 'News' urls=obj.urls %}">{{obj.headline| linebreaks | truncatechars:50}}</a></h2>
+                  <div class="news-meta"><span>{{obj.created|date}}</span></div>
+                </div>
+                {% endfor %}    
+              </div>
+              <div class="col-lg-6 border-start custom-border">
+                {% for obj in others2 %}            
+                <div class="news border-bottom pb-2">
+                  {% if obj.image_top %}
+                  <a href="{% url 'News' urls=obj.urls %}"><img src="{{obj.image_top.url}}" alt="" width="100%" height="200px"></a>
+                  {% elif obj.image_middle %}
+                  <a href="{% url 'News' urls=obj.urls %}"><img src="{{obj.image_middle.url}}" alt="" width="100%" height="200px"></a>
+                  {% elif obj.image_bottom %}
+                  <a href="{% url 'News' urls=obj.urls %}"><img src="{{obj.image_bottom.url}}" alt="" width="100%" height="200px"></a>
+                  {% endif %}
+                  <h2 class="mb-2"><a href="{% url 'News' urls=obj.urls %}">{{obj.headline| linebreaks | truncatechars:50}}</a></h2>
+                  <div class="news-meta"><span>{{obj.created|date}}</span></div>
+                </div>
+                {% endfor %}    
+              </div>
+            </div>
+          </div>
+
+        </div> <!-- End .row -->
+      </div>
+          
+  </main><!-- End #main -->
+
+
+  {% endblock content%}

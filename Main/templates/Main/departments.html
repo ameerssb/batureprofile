@@ -1,0 +1,94 @@
+{% extends 'main.html' %}
+
+{% load static %}
+        
+
+    {% block content%}
+
+    <header id="header" class="d-flex align-items-center bg-success">
+      <div class="col-lg-6 col-md-6">
+        <div class="container">
+          <h5 class="text-white">Kano State Ministry of Science, Technology and Innovation</h5>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6">
+        <div class="container">
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+        <nav id="navbar" class="navbar justify-content-end pe-2">
+          <ul>
+            <li><a class="nav-link" href="{% url 'Home' %}">Home</a></li>
+            <li><a class="nav-link active" href="{% url 'Departments' %}">Departments</a></li>
+            <li><a class="nav-link" href="{% url 'All-News' %}">News</a></li>
+            <li><a class="nav-link" href="{% url 'About' %}">About</a></li>
+            <li><a class="nav-link" href="{% url 'Contact' %}">Contact</a></li>
+          </ul>
+          <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav><!-- .navbar -->
+      </div>
+  
+      </div>
+    </header><!-- End Header -->
+    
+  <main id="main">
+    <section>
+      <div class="container">
+        <div class="row">
+
+          <div class="col-md-9" data-aos="fade-up">
+            <div class="section-title">
+              <h2>Departments</h2>
+            </div>
+						{% for obj in list %}   
+            <div class="d-md-flex news-2 half">
+              <a href="{% url 'Detail' urls=obj.urls %}" class="me-4 thumbnail">
+              <div class="container">
+                {% if obj.image %}
+                  <img src="{{ obj.image.url }}" alt="" id= "image" width="100%" height="300px"/>
+                {% else %}
+                  <img src='{% static "right2.jpg" %}' id="image" width="100%" height="300px"/>
+                {% endif %}
+              </div>      
+              </a>
+              <div>
+                <h3><a href="{% url 'Detail' urls=obj.urls %}">{{obj.name}}</a></h3>
+                <p>{{obj.responsible| linebreaks | truncatechars:100}}</p>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+
+          <div class="col-md-3">
+            <!-- ======= Sidebar ======= -->
+            <div class="side-block">
+
+              <ul class="nav nav-pills custom-tab-nav mb-4" id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="pills-popular-tab" data-bs-toggle="pill" data-bs-target="#pills-popular" type="button" role="tab" aria-controls="pills-popular" aria-selected="true">Top News</button>
+                </li>
+              </ul>
+
+              <div class="tab-content" id="pills-tabContent">
+
+                <!-- Popular -->
+                <div class="tab-pane fade show active" id="pills-popular" role="tabpanel" aria-labelledby="pills-popular-tab">
+                  {% for obj in recent %}
+                  {% if obj.urls %}      
+                  <div class="news border-bottom">
+                    <h2 class="mb-2"><a href="{% url 'News' urls=obj.urls %}">{{obj.headline | linebreaks | truncatechars:50}}</a></h2>
+                    <div class="news-meta"><span>{{obj.created|date}}</span></div>
+                  </div>
+                  {% endif %}
+                  {% endfor %}
+                </div> <!-- End Latest -->
+            </div>
+
+          </div>
+
+        </div>
+        </div>
+      </div>
+    </section>
+  </main><!-- End #main -->
+
+  {% endblock content%}
