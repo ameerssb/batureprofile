@@ -33,15 +33,11 @@ class AboutAdmin(admin.ModelAdmin):
         obj.user = request.user
         super().save_model(request, obj, form, change)
 
-# class CustomAdmin(admin.ModelAdmin):
-#     exclude = ('user',)
-#     def save_model(self, request, obj, form, change):
-#         obj.user = request.user
-#         obj.user = obj.user.set_password()
-#         super().save_model(request, obj, form, change)
+class CustomAdmin(admin.ModelAdmin):
+    list_display = ['email','username','first_name','is_staff','is_superuser']
+    exclude = ('user',)
 
-
-admin.site.register(User)
+admin.site.register(User,CustomAdmin)
 admin.site.register(Post,PostAdmin)
 admin.site.register(Department,DepartmentAdmin)
 admin.site.register(Footer,FooterAdmin)

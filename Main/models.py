@@ -31,13 +31,9 @@ class User(AbstractUser):
 	USERNAME_FIELD = 'email'
 	REQUIRED_FIELDS = ['username','first_name','last_name']
 
-	def __str__(self):
-		return self.username
-
 	def save(self, *args, **kwargs):
 		self.password = make_password(self.password)
 		super(User, self).save(*args, **kwargs)	
-
 
 class Post(models.Model):
 	user=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
