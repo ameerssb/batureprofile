@@ -9,8 +9,12 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-import os
+
 from pathlib import Path
+
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,17 +24,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-4ip85id#73)u6koe1i%@-_a**&b^r4#ezpv=ahp)cwhxbjsei)'
-#SECRET_KEY = os.environ['SECRET_KEY']
+
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-#DEBUG = os.environ['DEBUG']
+DEBUG = os.getenv('DEBUG')
 
-ALLOWED_HOSTS = ["127.0.0.1","env-MSTI.eba-mnmfdfey.us-west-2.elasticbeanstalk.com"]
+ALLT = os.getenv('ALLOWED_HOSTS')
 
-# ALTS = os.environ['ALLOWED_HOSTS']
-# ALLOWED_HOSTS = ALTS.split(',')
+ALLOWED_HOSTS = ALLT.split(',')
 
 # Application definition
 
@@ -86,18 +88,11 @@ WSGI_APPLICATION = 'MSTI.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-# NAME = str(os.getenv('DB_NAM'))
-# USER = str(os.getenv('USE'))
-# PASSWORD = str(os.getenv('PAS'))
-# HOST = str(os.getenv('HOS'))
-# PORT = os.getenv('POR')
-
-NAME = 'msti_website'
-USER = 'msti_admin'
-PASSWORD = '88890573'
-HOST = 'msti-database.cro7yg6xg5dk.us-east-1.rds.amazonaws.com'
-PORT = 3306
-
+NAME = str(os.getenv('NAME'))
+USER = str(os.getenv('USER'))
+PASSWORD = str(os.getenv('PASSWORD'))
+HOST = str(os.getenv('HOST'))
+PORT = os.getenv('PORT')
 
 
 DATABASES = {
@@ -136,7 +131,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Lagos'
 
 USE_I18N = True
 
