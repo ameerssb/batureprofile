@@ -1,6 +1,6 @@
-from urllib import request
 from django.conf import settings
 from django.db import models
+from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import AbstractUser
 from django.utils.text import slugify
 
@@ -33,6 +33,10 @@ class User(AbstractUser):
 
 	def __str__(self):
 		return self.username
+
+	def save(self, *args, **kwargs):
+		self.password = make_password(self.password)
+		super(User, self).save(*args, **kwargs)	
 
 
 class Post(models.Model):

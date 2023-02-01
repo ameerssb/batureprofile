@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
 from .models import User,Post,Department,Footer,Email,Contact,About
 
 # Register your models here.
@@ -34,7 +33,15 @@ class AboutAdmin(admin.ModelAdmin):
         obj.user = request.user
         super().save_model(request, obj, form, change)
 
-admin.site.register(User,UserAdmin)
+# class CustomAdmin(admin.ModelAdmin):
+#     exclude = ('user',)
+#     def save_model(self, request, obj, form, change):
+#         obj.user = request.user
+#         obj.user = obj.user.set_password()
+#         super().save_model(request, obj, form, change)
+
+
+admin.site.register(User)
 admin.site.register(Post,PostAdmin)
 admin.site.register(Department,DepartmentAdmin)
 admin.site.register(Footer,FooterAdmin)
