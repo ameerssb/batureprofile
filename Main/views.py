@@ -61,5 +61,8 @@ def Contact(request):
         # messages.success(request, "Email Submitted Successfully...")
         # return HttpResponseRedirect('contact-us')
 
+    social = Social.objects.last()
+    footer = Footer.objects.last()
+    context = {'page': 'contact', 'social': social, 'footer': footer,}
 
-    return render(request, 'Main/contact.html', context={'page':'contact'})
+    return render(request, 'Main/contact.html', context)
