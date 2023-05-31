@@ -1,0 +1,100 @@
+{% extends 'main.html' %}
+
+{% load static %}
+        
+
+  {% block content%}
+
+  <main class="py-5">
+    <div class="pe-5 d-flex justify-content-center">
+      <div class="card">
+        <div class="card-body">
+          <p class="text-justify">{{ research.body|linebreaksbr }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="ps-3">
+      <div><p class="fs-1 border-bottom border-secondary">Research Interests</p></div>
+      <div class="row">
+        <div class="col-auto">
+          <div class="ps-3">
+            {% if researchinterest.count > 0 %}          
+            <ul class="fs-5">
+              {% for r in researchinterest %}
+              <li class="pb-1">{{ r.name }}</li>
+              {% endfor %}
+            </ul>
+            {% else %}
+            <p class="ps-3 text-danger">No Research Interest Available</p>
+            {% endif %}  
+          </div>    
+        </div>
+      </div>
+    </div>
+    <div class="ps-3">
+      <div><p class="fs-1 border-bottom border-secondary">Graduate Students</p></div>
+      <div class="">
+        <div class="ps-3">
+          <p class="fs-6">In Progress</p>
+          {% if g1.count > 0 %}          
+          <ul class="fs-5">
+            {% for g in g1 %}
+            <li>{{g.name}}</li>            
+            {% endfor %}
+          </ul>
+          {% else %}
+          <p class="ps-3 text-danger">No Student</p>
+          {% endif %}
+        </div>    
+        <div class="ps-3">
+          <p class="fs-6">Completed</p>
+          {% if g2.count > 0 %}
+          <ul class="fs-5">
+            {% for g in g2 %}
+            <li class="pb-1">{{g.name}}</li>
+            <ul class="fs-5 text-muted">
+              <li>Thesis title: "{{g.thesis_title}}"</li>
+            </ul>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <p class="ps-3 text-danger">No Student</p>
+          {% endif %}
+        </div>              
+      </div>
+    </div>
+    <div class="ps-3">
+      <div><p class="fs-1 border-bottom border-secondary">Research Publications</p></div>
+      <div class="">
+        <div class="ps-3">
+          <p class="fs-5">Journals</p>
+          {% if p1.count > 0 %}
+          <ul class="fs-6 text-muted">
+            {% for p in p1 %}
+            <li class="pb-1">
+              {{p.thesis_title}}
+            </li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <p class="ps-3 text-danger">No Journal Article</p>
+          {% endif %}
+        </div>        
+        <div class="ps-3">
+          <p class="fs-5">Conferences</p>
+          {% if p2.count > 0 %}
+          <ul class="fs-6 text-muted">
+            {% for p in p2 %}
+            <li class="pb-1">
+              {{p.thesis_title}}
+            </li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <p class="ps-3 text-danger">No Conference Article</p>
+          {% endif %}
+        </div>            
+      </div>
+    </div>
+  </main>
+  {% endblock content%}

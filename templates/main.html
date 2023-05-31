@@ -5,25 +5,21 @@
 
 <head>
   <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <!-- <meta content="width=device-width, initial-scale=1.0" name="viewport"> -->
 
-  <title>Ministry of Science, Technology and Innovation</title>
+  <title>Profile | Sufyan Sani Bature</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
-  <link href="{% static 'assets/img/Msti/c0f599bb-4f86-41cf-9df5-26ebbc9bd50f.JPG' %}" rel="icon">
+  <link href="{% static 'assets/img/nigeria.JPG' %}" rel="icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
-  <link href="{% static 'assets/vendor/animate.css/animate.min.css' %}" rel="stylesheet">
   <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
   <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
   <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
-  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
 
-  <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
-  <link href="{% static 'assets/css/variables.css' %}" rel="stylesheet">
   <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
 
 
@@ -32,78 +28,146 @@
 
 <body>
 
+
   <!-- ======= Top Bar ======= -->
-  <section id="topbar" class="d-flex align-items-center">
-    <div class="container d-flex justify-content-center justify-content-md-between text-white">
-      <div class="contact-info d-flex align-items-center">
-        <i class="bi bi-envelope-fill"></i><a href="mailto:info@msti.gov.kn.ng" class="text-white">{{contact.email}}</a>
-        <i class="bi bi-phone-fill phone-icon"></i><a href="tel:+2348023048999" class="text-white">{{contact.call}}</a>
-      </div>
-      <div class="social-links d-none d-md-block">
-        <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-        <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-        <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-        <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
-      </div>
+<section id="topbar" class="d-flex align-items-center text-white bg-dark">
+    <div class="container-fluid d-flex justify-content-center justify-content-md-between text-white px-5">
+        <div class="contact-info d-flex align-items-center">
+        <i class="bi bi-envelope-fill"></i><a href="mailto:{{social.mail}}" class="text-white">{{social.mail}}</a>
+        </div>
+        <div class="social-links d-none d-md-block">
+            <a href="{{social.twitter}}" target="_blank" class="twitter"><i class="bi bi-twitter"></i></a>
+            <a href="{{social.facebook}}" target="_blank" class="facebook"><i class="bi bi-facebook"></i></a>
+            <a href="{{social.youtube}}" target="_blank" class="youtube"><i class="bi bi-youtube"></i></a>
+            <a href="{{social.instagram}}" target="_blank" class="instagram"><i class="bi bi-instagram"></i></a>
+            <a href="{{social.telegram}}" target="_blank" class="telegram"><i class="bi bi-telegram"></i></a>
+            <a href="{{social.linkedin}}" target="_blank" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
+            <a href="{{social.tiktok}}" target="_blank" class="tiktok"><i class="bi bi-tiktok"></i></a>
+        </div>
     </div>
-  </section>
-
+</section>
+  
   <!-- ======= Header ======= -->
-  <div class="container">
-         <div class="row d-flex align-items-center">
-             <!-- Logo -->
-             <div class="col-2">
-              <div class="container">
-                 <div class="responsive">
-                     <a href="#"><img src="{% static 'assets/img/Msti/c0f599bb-4f86-41cf-9df5-26ebbc9bd50f.JPG' %}" width="100%" height="100%" alt=""></a>
-                 </div>
-                </div>
-             </div>
-             <div class="col-8">
-              <div class="container">
-                 <div class="responsive">
-                  <img src="{% static 'assets/img/Msti/mist.png' %}" width="100%" height="100%" alt="">
-                 </div>
+  <div class="container-fluid d-flex justify-content-center py-4">
+    <div class="col-8 pe-4">
+      <header>
+        <div class="text-dark border-bottom border-secondary">
+          <h1 class="fw-bold">Sufyan Sani Bature, Bsc</h1>
+          <h6 class="fw-bold">Founder, <a href="#">Computer Scientist</a></h6>
+          <h6 class="fw-bold">Software Developer</h6>
+          <h6 class="fw-bold">Academic Researcher</h6>
+        </div>
+        <nav class="navbar navbar-expand-md navbar-light bg-white">
+          <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse row" id="navbarCollapse">
+              <div class="">
+                <ul class="d-flex justify-content-end me-auto mb-2 mb-md-0">
+                  <li class="nav-item">
+                    {% if page == 'home' %}
+                    <a class="nav-link fw-bold active" href="{% url 'Home' %}">Home</a>
+                    {% else %}
+                    <a class="nav-link fw-bold" href="{% url 'Home' %}">Home</a>
+                    {% endif %}
+                  </li>
+                  <li class="nav-item">
+                    {% if page == 'research' %}
+                    <a class="nav-link fw-bold active" href="{% url 'Research' %}">Research</a>
+                    {% else %}
+                    <a class="nav-link fw-bold" href="{% url 'Research' %}">Research</a>
+                    {% endif %}
+                  </li>
+                  <li class="nav-item">
+                    {% if page == 'experience' %}
+                    <a class="nav-link fw-bold active" href="{% url 'Experience' %}">Experience</a>
+                    {% else %}
+                    <a class="nav-link fw-bold" href="{% url 'Experience' %}">Experience</a>
+                    {% endif %}
+                  </li>
+                  <li class="nav-item">
+                    {% if page == 'photos' %}
+                    <a class="nav-link fw-bold active" href="{% url 'Photos' %}">Photos</a>
+                    {% else %}
+                    <a class="nav-link fw-bold" href="{% url 'Photos' %}">Photos</a>
+                    {% endif %}
+                  </li>
+                  <li class="nav-item">
+                    {% if page == 'contact' %}
+                    <a class="nav-link fw-bold active" href="{% url 'Contact' %}">Contact</a>
+                    {% else %}
+                    <a class="nav-link fw-bold" href="{% url 'Contact' %}">Contact</a>
+                    {% endif %}
+                  </li>
+                </ul>
               </div>
-             </div>
-             <div class="col-2">
-              <div class="container">
-              <div class="responsive">
-                <a href="#"><img src="{% static 'assets/img/Msti/54515981-0b4e-4ad3-ad99-8df45a1945e8.JPG' %}" width="100%" height="100%" alt="" style="border-radius: 50%; border: 2px solid #028a0F;"></a>
-              </div>
-              </div>
+            </div>
           </div>
-         </div>
- </div>
-
+        </nav>
+      </header>
   {% block content%}
 
 
   {% endblock %}
 
-  <footer id="footer">
-    <div class="container">
-      <h3>Ministry of Science, Technology and Innovation</h3>
-      <p>{{footer.body}}</p>
-      <div class="social-links">
-        <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-        <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-        <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-        <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-        <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-      </div>
-      <div class="copyright">
-        &copy; Copyright <strong><span>MSTI</span></strong> {{footer.year|date:"Y"}}
-      </div>
+
     </div>
-  </footer><!-- End Footer -->
+  </div>  
+
+<footer class="bg-light p-5" id="footer">
+    <div class="container-fluid">
+        <div class="row pb-2 border-bottom border-dark">
+            <div class="col-lg-6 pb-3">
+                <div class="col-10 pb-3 text-dark">
+                    <p>{{footer.body}}</p>
+                </div>
+                <div>
+                    <a href="#" class="btn btn-success rounded-5 px-5 fw-bold">Contact Me</a>
+                </div>
+            </div>
+            <div class="col-lg-6 pb-3">
+                <div class="row">
+                    <div class="col-6">
+                        <ul class="">
+                          <li class="pb-2"><a href="{% url 'Experience' %}">Projects</a></li>                          
+                            <li class="pb-2"><a href="{% url 'Experience' %}">Experience</a></li>
+                            <li class="pb-2"><a href="{% url 'Research' %}">Research</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-6 ps-3">
+                        <ul class="">
+                            <li class="pb-2"><a href="{% url 'Photos' %}">Photos</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>        
+        </div>
+        <div class="d-flex justify-content-lg-between">
+            <div class="row pt-4">
+                <div class="col-auto text-white">
+                    &copy; 2023 Sufyan Sani Bature                    
+                </div>
+            </div>
+            <div class="row pt-4">
+                <div class="social-links">
+                    <a href="{{social.twitter}}" target="_blank" class="twitter"><i class="bx bxl-twitter"></i></a>
+                    <a href="{{social.facebook}}" target="_blank" class="facebook"><i class="bx bxl-facebook"></i></a>
+                    <a href="{{social.youtube}}" target="_blank" class="youtube"><i class="bx bxl-youtube"></i></a>
+                    <a href="{{social.instagram}}" target="_blank" class="instagram"><i class="bx bxl-instagram"></i></a>
+                    <a href="{{social.telegram}}" target="_blank" class="telegram"><i class="bx bxl-telegram"></i></a>
+                    <a href="{{social.linkedin}}" target="_blank" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                    <a href="{{social.tiktok}}" target="_blank" class="tiktok"><i class="bx bxl-tiktok"></i></a>                    
+                  </div>                
+            </div>
+        </div>
+    </div>
+</footer>
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- JS Files -->
   <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-  <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
-  <script src="{% static 'assets/js/main.js' %}"></script>
 
 </body>
 

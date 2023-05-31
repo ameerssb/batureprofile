@@ -1,46 +1,17 @@
 from django.contrib import admin
-from .models import User,Post,Department,Footer,Email,Contact,About
+from django.contrib.auth.models import User,Group
+from .models import Social,HomeInfo,Research,ResearchInterest,Graduate,Publication,Experience,ExperienceDetail,Photos,Footer
 
-# Register your models here.
+admin.site.register(Social)
+admin.site.register(HomeInfo)
+admin.site.register(Research)
+admin.site.register(ResearchInterest)
+admin.site.register(Graduate)
+admin.site.register(Publication)
+admin.site.register(Experience)
+admin.site.register(ExperienceDetail)
+admin.site.register(Photos)
+admin.site.register(Footer)
 
-class PostAdmin(admin.ModelAdmin):
-    exclude = ('user',)
-    def save_model(self, request, obj, form, change):
-        obj.user = request.user
-        super().save_model(request, obj, form, change)
-
-class DepartmentAdmin(admin.ModelAdmin):
-    exclude = ('user',)
-    def save_model(self, request, obj, form, change):
-        obj.user = request.user
-        super().save_model(request, obj, form, change)
-
-class FooterAdmin(admin.ModelAdmin):
-    exclude = ('user',)
-    def save_model(self, request, obj, form, change):
-        obj.user = request.user
-        super().save_model(request, obj, form, change)
-
-class ContactAdmin(admin.ModelAdmin):
-    exclude = ('user',)
-    def save_model(self, request, obj, form, change):
-        obj.user = request.user
-        super().save_model(request, obj, form, change)
-
-class AboutAdmin(admin.ModelAdmin):
-    exclude = ('user',)
-    def save_model(self, request, obj, form, change):
-        obj.user = request.user
-        super().save_model(request, obj, form, change)
-
-class CustomAdmin(admin.ModelAdmin):
-    list_display = ['email','username','first_name','is_staff','is_superuser']
-    exclude = ('user',)
-
-admin.site.register(User,CustomAdmin)
-admin.site.register(Post,PostAdmin)
-admin.site.register(Department,DepartmentAdmin)
-admin.site.register(Footer,FooterAdmin)
-admin.site.register(Contact,ContactAdmin)
-admin.site.register(About,AboutAdmin)
-admin.site.register(Email)
+admin.site.unregister(User)
+admin.site.unregister(Group)
