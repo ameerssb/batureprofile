@@ -2,9 +2,12 @@
 
 
 
-from django.shortcuts import render
-from .models import Social,HomeInfo,Project,Research as Re,ResearchInterest,Graduate,Publication,Experience as Ex,ExperienceDetail,Photos as P,Footer
+from django.shortcuts import render,HttpResponseRedirect
+from .models import Email,Social,HomeInfo,Project,Research as Re,ResearchInterest,Graduate,Publication,Experience as Ex,ExperienceDetail,Photos as P,Footer
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib import messages
+from django.core.mail import send_mail
+
 # Create your views here.
 
 def Home(request):
@@ -42,14 +45,14 @@ def Projects(request):
     homeinfo = HomeInfo.objects.last()
     social = Social.objects.last()
     project = Project.objects.all().order_by('-created')
-    paginator = Paginator(project, 5)
-    page = request.GET.get('page')
-    try:
-        project = paginator.page(page)
-    except PageNotAnInteger:
-        project = paginator.page(1)
-    except EmptyPage:
-        project = paginator.page(paginator.num_pages)    
+    # paginator = Paginator(project, 5)
+    # page = request.GET.get('page')
+    # try:
+    #     project = paginator.page(page)
+    # except PageNotAnInteger:
+    #     project = paginator.page(1)
+    # except EmptyPage:
+    #     project = paginator.page(paginator.num_pages)    
     # print(project)
     context = {'page': 'project', 'homeinfo': homeinfo,'social':social,'project':project}
     return render(request, 'Main/project.html', context)
@@ -58,7 +61,7 @@ def ProjectPage(request,pk):
     homeinfo = HomeInfo.objects.last()
     social = Social.objects.last()
     projectpage = Project.objects.get(pk=pk)
-    context = {'page': 'projectpage', 'homeinfo': homeinfo,'social':social,'project':projectpage}
+    context = {'page': 'project', 'homeinfo': homeinfo,'social':social,'project':projectpage}
     return render(request, 'Main/projectpage.html', context)
 
 def Photoss(request):
@@ -71,16 +74,20 @@ def Photoss(request):
 
 def Contacts(request):
     if request.method == 'POST':
-        name = request.POST['name']
-        address = request.POST['email']
-        subject = request.POST['subject']
-        message = request.POST['message']
-
-        # email_adding = Email(name=name,email=address, subject=subject, message=message)
-        # email_adding.save()
-        # messages.success(request, "Email Submitted Successfully...")
-        # return HttpResponseRedirect('contact-us')
-
+        try:
+            name = request.POST['name']
+            address = request.POST['email']
+            subject = request.POST['subject']
+            message = request.POST['message']
+            
+            email_adding = Email(name=name,email=address, subject=subject, message=message)
+            email_adding.save()
+            send_mail(subject,message,address,['baturesanisufyan@gmail.com'],fail_silently=True,)
+            messages.success(request, "Email Submitted Successfully...")
+            return HttpResponseRedirect('contact')
+        except:
+            messages.success(request, "An error occured while sending email")
+            return HttpResponseRedirect('contact')            
     social = Social.objects.last()
     footer = Footer.objects.last()
     context = {'page': 'contact', 'social': social, 'footer': footer,}

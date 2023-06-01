@@ -48,6 +48,7 @@ class ResearchInterest(models.Model):
 class Project(models.Model):
     # session = models.IntegerField(default=0)
     headline = models.CharField(max_length=250,blank=True)
+    requirement = models.CharField(max_length=250,blank=True)
     short = models.TextField(blank=False)
     body = models.TextField(blank=True)    
     image = models.FileField(blank=False)
@@ -122,3 +123,11 @@ class Footer(models.Model):
 	def __str__(self):
 		return str(self.id)
 	
+class Email(models.Model):
+	name = models.CharField(blank=False, null=False, max_length=100)
+	email = models.EmailField(unique=False)
+	subject = models.CharField(blank=False, null=False, max_length=200)
+	message = models.TextField(blank=False, null=False)
+	created = models.DateTimeField(auto_now_add=True, auto_created=True)
+	def __str__(self):
+		return self.email
