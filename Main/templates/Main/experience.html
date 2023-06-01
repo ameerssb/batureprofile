@@ -24,12 +24,12 @@
               {% endif %}              
             </div>
             <div class="ps-4">
-              <span class="fw-bold fs-5">{{ex.place}}</span>
+              <span class="fw-bold fs-5" style="text-align: justify;">{{ex.place}}</span>
               <span class="fs-5">{{ex.department}}</span>
               {% for i in experiencedetail %}
               {% if i.experience == ex%}
               <ul class="fs-5">
-                <li class="pb-1">{{i.body}}</li>
+                <li class="pb-1" style="text-align: justify;">{{i.body}}</li>
               </ul>    
               {% endif %}
               {% endfor %}

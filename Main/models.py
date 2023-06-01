@@ -45,6 +45,21 @@ class ResearchInterest(models.Model):
 	def __str__(self):
 		return str(self.id)
 
+class Project(models.Model):
+    # session = models.IntegerField(default=0)
+    headline = models.CharField(max_length=250,blank=True)
+    body = models.TextField(blank=True)
+    image = models.FileField(blank=False)
+    video = models.FileField(blank=True)
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField()
+    url = models.URLField(blank=True)
+    created = models.DateTimeField(auto_now_add=True, auto_created=True)
+    updated = models.DateTimeField(auto_now=True, auto_created=True)
+    
+    def __str__(self):
+        return str(self.id)
+    
 class Graduate(models.Model):
     name = models.CharField(max_length=250, blank=True)
     class Gr_Type(models.TextChoices):

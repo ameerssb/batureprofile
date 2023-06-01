@@ -49,7 +49,7 @@
   
   <!-- ======= Header ======= -->
   <div class="container-fluid d-flex justify-content-center py-4">
-    <div class="col-lg-8 pe-4">
+    <div class="col-8 pe-4">
       <header>
         <div class="text-dark border-bottom border-secondary">
           <h1 class="fw-bold">Sufyan Sani Bature, Bsc</h1>
@@ -70,6 +70,13 @@
                     <a class="nav-link fw-bold active" href="{% url 'Home' %}">Home</a>
                     {% else %}
                     <a class="nav-link fw-bold" href="{% url 'Home' %}">Home</a>
+                    {% endif %}
+                  </li>
+                  <li class="nav-item">
+                    {% if page == 'project' %}
+                    <a class="nav-link fw-bold active" href="{% url 'Project' %}">Project</a>
+                    {% else %}
+                    <a class="nav-link fw-bold" href="{% url 'Project' %}">Project</a>
                     {% endif %}
                   </li>
                   <li class="nav-item">
@@ -118,7 +125,7 @@
 <footer class="bg-light p-5" id="footer">
     <div class="container-fluid">
         <div class="row pb-2 border-bottom border-dark">
-            <div class="col-lg-6 pb-3">
+            <div class="col-6 pb-3">
                 <div class="col-10 pb-3 text-dark">
                     <p>{{footer.body}}</p>
                 </div>
@@ -126,7 +133,7 @@
                     <a href="#" class="btn btn-success rounded-5 px-5 fw-bold">Contact Me</a>
                 </div>
             </div>
-            <div class="col-lg-6 pb-3">
+            <div class="col-6 pb-3">
                 <div class="row">
                     <div class="col-6">
                         <ul class="">

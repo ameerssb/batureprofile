@@ -3,8 +3,8 @@
 
 
 from django.shortcuts import render
-from .models import Social,HomeInfo,Research as Re,ResearchInterest,Graduate,Publication,Experience as Ex,ExperienceDetail,Photos as P,Footer
-
+from .models import Social,HomeInfo,Project,Research as Re,ResearchInterest,Graduate,Publication,Experience as Ex,ExperienceDetail,Photos as P,Footer
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
 
 def Home(request):
@@ -15,7 +15,7 @@ def Home(request):
     
     return render(request, 'Main/index.html', context)
 
-def Research(request):
+def Researchs(request):
     social = Social.objects.last()
     research = Re.objects.last()
     researchinterest = ResearchInterest.objects.all()
@@ -28,7 +28,7 @@ def Research(request):
 
     return render(request, 'Main/research.html', context)
 
-def Experience(request):
+def Experiences(request):
     social = Social.objects.last()
     experience = Ex.objects.all()
     experiencedetail = ExperienceDetail.objects.all()
@@ -37,11 +37,24 @@ def Experience(request):
 
     return render(request, 'Main/experience.html', context)
 
-def Events(request):
+def Projects(request):
 
-    return render(request, 'Main/events.html', context={'page':'events'})
+    homeinfo = HomeInfo.objects.last()
+    social = Social.objects.last()
+    project = Project.objects.all().order_by('-created')
+    paginator = Paginator(project, 5)
+    page = request.GET.get('page')
+    try:
+        past = paginator.page(page)
+    except PageNotAnInteger:
+        past = paginator.page(1)
+    except EmptyPage:
+        past = paginator.page(paginator.num_pages)    
+    # print(past)
+    context = {'page': 'project', 'homeinfo': homeinfo,'social':social,'project':project}
+    return render(request, 'Main/project.html', context)
 
-def Photos(request):
+def Photoss(request):
     social = Social.objects.last()
     photos = P.objects.all()
     footer = Footer.objects.last()
@@ -49,7 +62,7 @@ def Photos(request):
 
     return render(request, 'Main/photos.html', context)
 
-def Contact(request):
+def Contacts(request):
     if request.method == 'POST':
         name = request.POST['name']
         address = request.POST['email']
