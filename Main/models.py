@@ -48,7 +48,8 @@ class ResearchInterest(models.Model):
 class Project(models.Model):
     # session = models.IntegerField(default=0)
     headline = models.CharField(max_length=250,blank=True)
-    body = models.TextField(blank=True)
+    short = models.TextField(blank=False)
+    body = models.TextField(blank=True)    
     image = models.FileField(blank=False)
     video = models.FileField(blank=True)
     start_date = models.DateTimeField()

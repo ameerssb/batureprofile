@@ -25,10 +25,7 @@
             {% endif %}
           </div>
           <div class="col-md-7">
-            <h4><a href="#">{{obj.headline}}</a></h4>
-            {% if obj.body %}
-            <p style="text-align: justify;">{{obj.body | linebreaksbr }}</p>
-            {% endif %}
+            <h4><a href="{% url 'ProjectPage' pk=obj.id %}">{{obj.headline}}</a></h4>
             <!-- <p class="fs-6"><span class="text-danger fw-bold">Date: </span>{{obj.start_date}} to {{obj.end_date}}</p> -->
             <div class="news-meta"><span class="text-primary">Link: </span><a href="{{obj.url}}" target="_blank">{{obj.url}}</a></div>            
             <div class="news-meta"><span class="text-primary">Duration: </span><span>{{obj.start_date|date}} to {{obj.end_date|date}}</span></div>

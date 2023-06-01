@@ -45,14 +45,21 @@ def Projects(request):
     paginator = Paginator(project, 5)
     page = request.GET.get('page')
     try:
-        past = paginator.page(page)
+        project = paginator.page(page)
     except PageNotAnInteger:
-        past = paginator.page(1)
+        project = paginator.page(1)
     except EmptyPage:
-        past = paginator.page(paginator.num_pages)    
-    # print(past)
+        project = paginator.page(paginator.num_pages)    
+    # print(project)
     context = {'page': 'project', 'homeinfo': homeinfo,'social':social,'project':project}
     return render(request, 'Main/project.html', context)
+
+def ProjectPage(request,pk):
+    homeinfo = HomeInfo.objects.last()
+    social = Social.objects.last()
+    projectpage = Project.objects.get(pk=pk)
+    context = {'page': 'projectpage', 'homeinfo': homeinfo,'social':social,'project':projectpage}
+    return render(request, 'Main/projectpage.html', context)
 
 def Photoss(request):
     social = Social.objects.last()

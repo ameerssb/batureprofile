@@ -1,0 +1,36 @@
+{% extends 'main.html' %}
+
+{% load static %}
+{% load embed_video_tags %}        
+
+{% block content%}
+
+    <main id="main">
+
+    <!-- ======= Search Results ======= -->
+    <section>
+      <div class="container-fluid">
+        <div class="d-flex justify-content-between text-success">
+          <h3>{{project.headline}}</h3>
+          <span class="text-primary"></span><a href="{{project.url}}" target="_blank">{{project.url}}</a>      
+        </div>          
+        <div class="pb-4 text-end">
+          <span class="text-primary">Duration: </span>
+          <span>{{project.start_date|date}} - {{project.end_date|date}}</span>
+        </div>
+        {% if project.body %}
+          <p style="text-align: justify;">{{project.body | linebreaksbr }}</p>
+        {% endif %}
+        {% if project.video %}
+          <video controls preload loop poster="{{project.image.url}}" height="100%" width="100%">
+            <source src="{{project.video.url}}" type="video/mp4">
+          </video>
+        {% else %}
+          <img src="{{project.image.url}}" alt="" height="100%" width="100%" class="border border-success">            
+        {% endif %}
+      </div>
+    </section> <!-- End Search Result -->
+
+    </main><!-- End #main -->
+    
+{% endblock content%}
