@@ -41,10 +41,9 @@ def Experiences(request):
     return render(request, 'Main/experience.html', context)
 
 def Projects(request):
-
     homeinfo = HomeInfo.objects.last()
     social = Social.objects.last()
-    project = Project.objects.all().order_by('-created')
+    project = Project.objects.all().order_by('priority')
     # paginator = Paginator(project, 5)
     # page = request.GET.get('page')
     # try:
@@ -79,6 +78,7 @@ def Contacts(request):
             address = request.POST['email']
             subject = request.POST['subject']
             message = request.POST['message']
+            message = message + "\n\n" + "from" + name
             
             email_adding = Email(name=name,email=address, subject=subject, message=message)
             email_adding.save()
