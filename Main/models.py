@@ -5,6 +5,7 @@ from embed_video.fields import EmbedVideoField
 class Social(models.Model):
 	office = models.CharField(max_length=250, default="#", blank=True)
 	mail = models.CharField(max_length=250, default="#", blank=True)
+	researchgate=models.CharField(max_length=250, default="#", blank=True)
 	twitter=models.CharField(max_length=250, default="#", blank=True)
 	facebook=models.CharField(max_length=250, default="#", blank=True)
 	github=models.CharField(max_length=250, default="#", blank=True)
@@ -18,11 +19,19 @@ class Social(models.Model):
 	def __str__(self):
 		return str(self.id)
     
+class Header(models.Model):
+	priority = models.IntegerField(default=0)
+	name = models.CharField(max_length=250)
+
+	def __str__(self):
+		return self.name
+
 class HomeInfo(models.Model):
 	body = models.TextField(blank=True)
 	image = models.FileField(blank=True)
 	video = EmbedVideoField(blank=True)
 	cv = models.FileField(blank=True)
+	resume = models.FileField(blank=True)	
 	created = models.DateTimeField(auto_now_add=True, auto_created=True)
 	updated = models.DateTimeField(auto_now=True, auto_created=True)
 
