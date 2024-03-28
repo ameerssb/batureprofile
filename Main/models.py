@@ -2,7 +2,19 @@ from django.conf import settings
 from django.db import models
 from embed_video.fields import EmbedVideoField
 
+class Hint(models.Model):
+    # priority = models.IntegerField(default=0)
+    topic = models.CharField(max_length=250)
+    name = models.CharField(max_length=200)
+    author = models.CharField(max_length=100)    
+    body = models.TextField()     
+    url = models.CharField(max_length=250, default="#")
+    
+    def __str__(self):
+        return self.name
+
 class Social(models.Model):
+	book = models.CharField(max_length=250, default="#", blank=True)
 	office = models.CharField(max_length=250, default="#", blank=True)
 	mail = models.CharField(max_length=250, default="#", blank=True)
 	researchgate=models.CharField(max_length=250, default="#", blank=True)
@@ -18,7 +30,7 @@ class Social(models.Model):
 
 	def __str__(self):
 		return str(self.id)
-    
+
 class Header(models.Model):
 	priority = models.IntegerField(default=0)
 	name = models.CharField(max_length=250)
@@ -31,7 +43,7 @@ class HomeInfo(models.Model):
 	image = models.FileField(blank=True)
 	video = EmbedVideoField(blank=True)
 	cv = models.FileField(blank=True)
-	resume = models.FileField(blank=True)	
+	resume = models.FileField(blank=True)
 	created = models.DateTimeField(auto_now_add=True, auto_created=True)
 	updated = models.DateTimeField(auto_now=True, auto_created=True)
 
@@ -61,25 +73,25 @@ class Project(models.Model):
 	requirement = models.CharField(max_length=250,blank=True)
 	short = models.TextField(blank=False)
 	source_code = models.URLField(blank=True)
-	body = models.TextField(blank=True)    
+	body = models.TextField(blank=True)
 	image = models.FileField(blank=False)
 	video = models.FileField(blank=True)
 	start_date = models.DateTimeField()
-	end_date = models.DateTimeField()
+	end_date = models.DateTimeField(blank=True)
 	url = models.URLField(blank=True)
 	created = models.DateTimeField(auto_now_add=True, auto_created=True)
 	updated = models.DateTimeField(auto_now=True, auto_created=True)
-    
+
 	def __str__(self):
 	    return str(self.headline)
-    
+
 class Graduate(models.Model):
     name = models.CharField(max_length=250, blank=True)
     class Gr_Type(models.TextChoices):
         in_progress = 'In-Progress'
         completed = 'Completed'
     types = models.CharField(choices=Gr_Type.choices, default="__________", max_length=20)
-    thesis_title = models.CharField(max_length=250, blank=True)   
+    thesis_title = models.CharField(max_length=250, blank=True)
     created = models.DateTimeField(auto_now_add=True, auto_created=True)
     updated = models.DateTimeField(auto_now=True, auto_created=True)
 
@@ -91,7 +103,7 @@ class Publication(models.Model):
 		journals = 'Journals'
 		conferences = 'Conferences'
 	types = models.CharField(choices=P_Type.choices, default="__________", max_length=20)
-	thesis_title = models.CharField(max_length=250, blank=True)	
+	thesis_title = models.CharField(max_length=250, blank=True)
 	link = models.URLField(blank=True)
 	created = models.DateTimeField(auto_now_add=True, auto_created=True)
 	updated = models.DateTimeField(auto_now=True, auto_created=True)
@@ -100,16 +112,17 @@ class Publication(models.Model):
 		return str(self.id)
 
 class Experience(models.Model):
-	position = models.CharField(max_length=200)
-	time = models.CharField(max_length=250)
-	place = models.TextField()
-	department = models.CharField(max_length=250)
-	logo = models.FileField(blank=True, default='default_user.png')
-	created = models.DateTimeField(auto_now_add=True, auto_created=True)
-	updated = models.DateTimeField(auto_now=True, auto_created=True)
+    priority = models.IntegerField(blank=True)
+    position = models.CharField(max_length=200)
+    time = models.CharField(max_length=250)
+    place = models.TextField()
+    department = models.CharField(max_length=250)
+    logo = models.FileField(blank=True, default='default_user.png')
+    created = models.DateTimeField(auto_now_add=True, auto_created=True)
+    updated = models.DateTimeField(auto_now=True, auto_created=True)
 
-	def __str__(self):
-		return str(self.id)
+    def __str__(self):
+        return str(self.priority)
 
 class ExperienceDetail(models.Model):
 	experience = models.ForeignKey(Experience, on_delete=models.CASCADE)
@@ -122,11 +135,11 @@ class ExperienceDetail(models.Model):
 
 class Photos(models.Model):
 	number = models.IntegerField()
-	image = models.FileField()	
+	image = models.FileField()
 
 	def __str__(self):
-		return str(self.id)	
-	
+		return str(self.id)
+
 class Footer(models.Model):
 	body = models.TextField(blank=True)
 	created = models.DateTimeField(auto_now_add=True, auto_created=True)
@@ -134,7 +147,7 @@ class Footer(models.Model):
 
 	def __str__(self):
 		return str(self.id)
-	
+
 class Email(models.Model):
 	name = models.CharField(blank=False, null=False, max_length=100)
 	email = models.EmailField(unique=False)

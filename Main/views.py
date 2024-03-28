@@ -1,23 +1,32 @@
-
-
-
-
 from django.shortcuts import render,HttpResponseRedirect
-from .models import Header,Email,Social,HomeInfo,Project,Research as Re,ResearchInterest,Graduate,Publication,Experience as Ex,ExperienceDetail,Photos as P,Footer
+from django.http import JsonResponse
+from .models import Hint,Header,Email,Social,HomeInfo,Project,Research as Re,ResearchInterest,Graduate,Publication,Experience as Ex,ExperienceDetail,Photos as P,Footer
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
 from django.contrib import messages
 from django.core.mail import send_mail
 
 # Create your views here.
 
-def Home(request):
-    social = Social.objects.last()
-    homeinfo = HomeInfo.objects.last()
-    header = Header.objects.all().order_by('priority')
-    footer = Footer.objects.last()
-    context = {'page': 'home', 'social': social, 'homeinfo': homeinfo, 'footer': footer,'header':header,}
+def Hints(request):
+    if  request.method == 'GET':
+        otherhint = Hint.objects.order_by('?')[:20]
+        otherhint = list(otherhint.values())
+        data = {'hint_list':otherhint}
+        return JsonResponse(data)
     
-    return render(request, 'Main/index.html', context)
+
+def Home(request):
+    if  request.method == 'GET':
+        hint = Hint.objects.filter(Q(author='Jameleddine Hassine') | Q(author__startswith='Mi')).order_by('?').first()
+        print(hint)
+        social = Social.objects.last()
+        homeinfo = HomeInfo.objects.last()
+        header = Header.objects.all().order_by('priority')
+        footer = Footer.objects.last()
+        context = {'page': 'home', 'social': social, 'homeinfo': homeinfo, 'footer': footer,'header':header,'hint':hint}
+    
+        return render(request, 'Main/index.html', context)
 
 def Researchs(request):
     social = Social.objects.last()
@@ -35,7 +44,7 @@ def Researchs(request):
 
 def Experiences(request):
     social = Social.objects.last()
-    experience = Ex.objects.all()
+    experience = Ex.objects.all().order_by('priority')
     experiencedetail = ExperienceDetail.objects.all()
     footer = Footer.objects.last()
     header = Header.objects.all().order_by('priority')    
@@ -49,8 +58,8 @@ def Projects(request):
     project = Project.objects.all().order_by('priority')
     footer = Footer.objects.last()
     header = Header.objects.all().order_by('priority')    
-    # paginator = Paginator(project, 5)
-    # page = request.GET.get('page')
+    paginator = Paginator(project, 5)
+    page = request.GET.get('page')
     # try:
     #     project = paginator.page(page)
     # except PageNotAnInteger:
@@ -95,7 +104,7 @@ def Contacts(request):
             messages.success(request, "An error occured while sending email")
             return HttpResponseRedirect('contact')            
     social = Social.objects.last()
-    header = Header.objects.all().order_by('-priority')    
+    header = Header.objects.all().order_by('priority')    
     footer = Footer.objects.last()
     context = {'page': 'contact', 'social': social, 'footer': footer,'header':header,}
 

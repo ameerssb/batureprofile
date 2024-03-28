@@ -1,12 +1,13 @@
 from django.contrib import admin
 from django.contrib.auth.models import User,Group
-from .models import Header,Email,Social,HomeInfo,Research,ResearchInterest,Graduate,Publication,Experience,ExperienceDetail,Photos,Footer,Project
+from .models import Hint,Header,Email,Social,HomeInfo,Research,ResearchInterest,Graduate,Publication,Experience,ExperienceDetail,Photos,Footer,Project
 
 @admin.register(Email)
 class EmailAdmin(admin.ModelAdmin):
     list_display = ["name","email","subject","created"]
     readonly_fields = ["name","email","subject","message"]
 
+admin.site.register(Hint)
 admin.site.register(Header)
 admin.site.register(Social)
 admin.site.register(Project)

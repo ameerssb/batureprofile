@@ -23,8 +23,9 @@
         {% endif %}  
       </div>    
     </div>
-    <div class="ps-3">
-      <p class="fs-2 border-bottom border-secondary">Research Publications</p>
+    <div class="container-fluid ps-3">
+      <p class="fs-2 border-bottom border-secondary">Publications</p>
+      <p class="fs-4 border-secondary">Journals</p>
       <div class="ps-3">
         {% if p1.count > 0 %}
         <ul class="fs-6">
@@ -39,15 +40,14 @@
         <p class="ps-3 text-danger">No Journal Article</p>
         {% endif %}
       </div>       
-    </div>
-    <div class="ps-3">
-      <p class="fs-2 border-bottom border-secondary">Conferences</p>
+      <p class="fs-4 border-secondary">Conferences</p>
       <div class="ps-3">
         {% if p2.count > 0 %}
         <ul class="fs-6">
           {% for p in p2 %}
           <li class="pb-1">
-            {{p.thesis_title}}
+            <span>{{p.thesis_title}}</span>
+            <span><a href="{{p.link}}" target="_blank">{{p.link}}</a></span>
           </li>
           {% endfor %}
         </ul>

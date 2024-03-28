@@ -56,21 +56,29 @@
       <header>
         <div class="text-dark border-bottom border-secondary">
           <h1 class="fw-bold">Sani Sufyan Bature, Bsc</h1>
-          {% for obj in header %}
-          <h6>{{obj.name}}</h6>
-          {% endfor %}
+          <div class="row">
+            <div class="col-auto">
+              {% for obj in header %}
+              <h6>{{obj.name}}</h6>
+              {% endfor %}    
+            </div>
+            <div class="col-auto pb-3">
+              <span class="fw-bold">Current Reading:</span>
+              <span>{{social.book}}</span>
+            </div>
+          </div>
           <!-- <h6>📫 Let's collaborate! Reach out to me for exciting opportunities or interesting projects</h6> -->
           <!-- <h6 class="fw-bold">Computer Scientist</h6>
           <h6 class="fw-bold">Software Engineer</h6>
           <h6 class="fw-bold">Academic Researcher</h6> -->
         </div>
-        <nav class="navbar navbar-expand-md navbar-light bg-white">
+        <nav class="navbar navbar-expand-md navbar-light bg-white py-1">
           <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse row" id="navbarCollapse">
-              <div class="">
+              <div class="border-bottom border-secondary pb-2">
                 <ul class="d-flex justify-content-end me-auto mb-2 mb-md-0">
                   <li class="nav-item">
                     {% if page == 'home' %}
@@ -120,6 +128,32 @@
           </div>
         </nav>
       </header>
+      <div class="modal" id="AddModal" tabindex="-1" aria-labelledby="AddModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h6 class="modal-title text-danger" id="modal-title">Did You Know ?</h6>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <div id="modal-body">{{hint.body}}</div>
+            <div>by - <span class="text-primary fst-italic fw-6" id="modal-author">{{hint.author}}</span>
+              <a href="{{hint.url}}" target="_blank" id="modal-url">(source)</a>
+            </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <div>
+                <span>Topic: </span><span id="modal-topic">{{hint.topic}}</span>
+              </div>
+              <div>
+                <button type="button" class="btn btn-dark" id="next-hint">Next</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>                
+            </div>
+          </div>
+        </div>
+      </div>      
+  
   {% block content%}
 
 
@@ -183,6 +217,68 @@
 
   <!-- JS Files -->
   <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+  <script>
+    var modal = null;
+    var hint_list = null;
+    var iter = 0;
+    var modal_body = document.getElementById("modal-body");
+    var modal_author = document.getElementById("modal-author");
+    var modal_url = document.getElementById("modal-url");
+    var modal_topic = document.getElementById("modal-topic");
+    var next_hint = document.getElementById("next-hint");
+    window.addEventListener("load",
+    function(){
+      // console.log(modal_body.value);
+        var addModal = document.getElementById("AddModal");
+        modal = new bootstrap.Modal(addModal);
+        console.log(modal_body.textContent.length)
+        if (modal_body.textContent.length != 0){
+          modal.show();
+        }
+    }
+  );
+
+  $.ajax({
+      type: 'GET',
+      url: "hint",
+      dataType: 'json',
+      success:function(response){
+        hint_list = response.hint_list;        
+        // console.log(hint_list);
+        console.log(hint_list.length);        
+      }
+    });
+
+
+  next_hint.addEventListener('click',
+    function(){
+      hint();
+    }
+  );
+
+  function hint(){
+    if(modal != null){
+      modal_body.innerHTML = hint_list[iter]['body'];
+      modal_author.innerHTML = hint_list[iter]['author'];
+      modal_url.innerHTML = '(source)';
+      modal_url.url = hint_list[iter]['url'];
+      modal_topic.innerHTML = hint_list[iter]['topic'];
+      if(iter < hint_list.length-1){
+        iter = iter + 1;
+      }
+      else{
+        iter = 0;
+      }
+    }
+  }
+
+  function hint_repeat(){
+    hint();
+    modal.show();        
+  }
+  setInterval(hint_repeat, 2 * 60 * 1000);
+  </script>
 
 </body>
 
