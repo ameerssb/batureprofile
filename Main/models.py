@@ -66,23 +66,38 @@ class ResearchInterest(models.Model):
 	def __str__(self):
 		return str(self.name)
 
-class Project(models.Model):
-    # session = models.IntegerField(default=0)
+class Cat_Projects(models.Model):
 	priority = models.IntegerField(blank=False)
-	headline = models.CharField(max_length=250,blank=True)
-	requirement = models.CharField(max_length=250,blank=True)
-	short = models.TextField(blank=False)
-	source_code = models.URLField(blank=True)
-	body = models.TextField(blank=True)
+	slug = models.SlugField(null=False, unique=True)
+	name = models.CharField(max_length=250,blank=False)
+	body = models.TextField(blank=False)
 	image = models.FileField(blank=False)
-	video = models.FileField(blank=True)
 	start_date = models.DateTimeField()
 	end_date = models.DateTimeField(blank=True)
-	url = models.URLField(blank=True)
 	created = models.DateTimeField(auto_now_add=True, auto_created=True)
 	updated = models.DateTimeField(auto_now=True, auto_created=True)
 
 	def __str__(self):
+	    return str(self.name)
+
+class Project(models.Model):
+    # session = models.IntegerField(default=0)
+    cat = models.ForeignKey(Cat_Projects,null=True,blank=True,on_delete=models.CASCADE)
+    priority = models.IntegerField(blank=False)
+    headline = models.CharField(max_length=250,blank=True)
+    requirement = models.CharField(max_length=250,blank=True)
+    short = models.TextField(blank=False)
+    source_code = models.URLField(blank=True)
+    body = models.TextField(blank=True)
+    image = models.FileField(blank=False)
+    video = models.FileField(blank=True)
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField(blank=True)
+    url = models.URLField(blank=True)
+    created = models.DateTimeField(auto_now_add=True, auto_created=True)
+    updated = models.DateTimeField(auto_now=True, auto_created=True)
+    
+    def __str__(self):
 	    return str(self.headline)
 
 class Graduate(models.Model):

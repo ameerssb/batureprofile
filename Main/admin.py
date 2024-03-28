@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.models import User,Group
-from .models import Hint,Header,Email,Social,HomeInfo,Research,ResearchInterest,Graduate,Publication,Experience,ExperienceDetail,Photos,Footer,Project
+from .models import Hint,Header,Email,Social,HomeInfo,Research,ResearchInterest,Graduate,Publication,Experience,ExperienceDetail,Photos,Footer,Project,Cat_Projects
 
 @admin.register(Email)
 class EmailAdmin(admin.ModelAdmin):
@@ -11,6 +11,7 @@ admin.site.register(Hint)
 admin.site.register(Header)
 admin.site.register(Social)
 admin.site.register(Project)
+admin.site.register(Cat_Projects)
 admin.site.register(HomeInfo)
 admin.site.register(Research)
 admin.site.register(ResearchInterest)

@@ -1,6 +1,6 @@
 from django.shortcuts import render,HttpResponseRedirect
 from django.http import JsonResponse
-from .models import Hint,Header,Email,Social,HomeInfo,Project,Research as Re,ResearchInterest,Graduate,Publication,Experience as Ex,ExperienceDetail,Photos as P,Footer
+from .models import Hint,Header,Email,Social,HomeInfo,Project,Cat_Projects,Research as Re,ResearchInterest,Graduate,Publication,Experience as Ex,ExperienceDetail,Photos as P,Footer
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.contrib import messages
@@ -52,10 +52,21 @@ def Experiences(request):
 
     return render(request, 'Main/experience.html', context)
 
-def Projects(request):
+def Cat_Project(request):
     homeinfo = HomeInfo.objects.last()
     social = Social.objects.last()
-    project = Project.objects.all().order_by('priority')
+    cat_project = Cat_Projects.objects.all().order_by('priority')
+    print(cat_project[1].name)
+    footer = Footer.objects.last()
+    header = Header.objects.all().order_by('priority')    
+    context = {'page': 'project', 'homeinfo': homeinfo,'social':social,'cat_project':cat_project, 'footer': footer,'header':header,}
+    return render(request, 'Main/projectcategory.html', context)
+
+def Projects(request,cat_name):
+    homeinfo = HomeInfo.objects.last()
+    social = Social.objects.last()
+    cat_pro = Cat_Projects.objects.get(slug=cat_name)
+    project = Project.objects.filter(cat=cat_pro).order_by('priority')
     footer = Footer.objects.last()
     header = Header.objects.all().order_by('priority')    
     paginator = Paginator(project, 5)
@@ -67,13 +78,14 @@ def Projects(request):
     # except EmptyPage:
     #     project = paginator.page(paginator.num_pages)    
     # print(project)
-    context = {'page': 'project', 'homeinfo': homeinfo,'social':social,'project':project, 'footer': footer,'header':header,}
+    context = {'page': 'project', 'homeinfo': homeinfo,'social':social,'cat':cat_pro,'project':project, 'footer': footer,'header':header,}
     return render(request, 'Main/project.html', context)
 
-def ProjectPage(request,pk):
+def ProjectPage(request,cat_name,pk):
     homeinfo = HomeInfo.objects.last()
     social = Social.objects.last()    
-    projectpage = Project.objects.get(pk=pk)
+    cat_pro = Cat_Projects.objects.get(slug=cat_name)
+    projectpage = Project.objects.get(Q(pk=pk) & Q(cat=cat_pro))
     context = {'page': 'project', 'homeinfo': homeinfo,'social':social,'project':projectpage}
     return render(request, 'Main/projectpage.html', context)
 
